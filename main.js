@@ -26,36 +26,32 @@ function simulate() {
 }
 
 function generateRoundsData() {
-    isFieldsNumber(); //sets field to 0 is NaN
-    if(!isMinutesZero()){
-        return;
-    }
-    if(!isFieldsPositive()){
-        return;
-    };
-
     const tempArray = [];
-    
     const betRed = parseInt(document.getElementById('js-bet-red').value);
     const betYellow = parseInt(document.getElementById('js-bet-yellow').value);
     const betGreen = parseInt(document.getElementById('js-bet-green').value);
     const totalBet = betRed + betYellow + betGreen;
-
     const minutes = parseInt(document.getElementById('js-minutes').value);
+
     let totalMinutes = 0;
     let initialBalance = parseInt(document.getElementById('js-initial-money').value);
     let finalBalance = initialBalance;
     let i = 1;
     let isWinning = true;
 
-    if (totalBet > initialBalance) {
-        alert(`Initial balance: ${initialBalance} should be greater than Total bet: ${totalBet}`);
+    isFieldsNumber(); //sets field to 0 if NaN
+    if(checkTotalBet(initialBalance, totalBet)){
         return;
     }
-    if(totalBet == 0){
-        alert('Total bet cannot be 0');
+    if(!isFieldsPositive()){
+        return;
+    };
+    if(!isMinutesZero()){
         return;
     }
+    
+
+    
     
     while(isWinning && i < 256) {
         totalMinutes += minutes;
@@ -141,7 +137,6 @@ function isFieldsNumber(){
     const betYellow = document.getElementById('js-bet-yellow');
     const betGreen = document.getElementById('js-bet-green');
     const initialBalance = document.getElementById('js-initial-money');
-    const minutes = document.getElementById('js-minutes');   
    
     if (isNaN(parseInt(betRed.value))){
         document.getElementById('js-bet-red').value = 0;
@@ -227,4 +222,16 @@ function isMinutesZero(){
     }
 
     return true;
+}
+
+function checkTotalBet(initialBalance, totalBet){
+    if (totalBet > initialBalance) {
+        alert(`Initial balance: ${initialBalance} should be greater than Total bet: ${totalBet}`);
+        return true;
+    }
+    if(totalBet == 0){
+        alert('Total bet cannot be 0');
+        return true;
+    }
+    return false;
 }
