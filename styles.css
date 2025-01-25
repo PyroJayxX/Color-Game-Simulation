@@ -6,11 +6,12 @@ body {
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  height: 100vh;
+  max-height: 100svh;
 }
 
 h1 {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 #parent-container {
@@ -76,6 +77,10 @@ table {
   text-align: center;
 }
 
+tr:nth-child(even) {
+  background-color: rgb(220, 255, 224);
+}
+
 th,
 td {
   padding: 10px;
@@ -87,13 +92,28 @@ th {
   color: white;
   font-weight: bold;
   text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 td {
-  padding-top: 10px;
-  padding-bottom: 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-
+  padding: 10px;
 }
 
+@media (max-width: 750px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  #parent-container {
+    height: 100%;
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(100px, auto);
+    grid-template-rows: auto;
+  }
+
+  #tableContainer {
+    height: 50svh;
+  }
+}
