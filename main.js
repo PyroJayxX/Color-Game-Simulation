@@ -8,11 +8,11 @@ function simulate() {
     const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
     resultsTable.innerHTML = '';
 
-    const arrayData = generateRoundsData();
-    const sampleData = arrayData[0];
-    const finalBalance = parseInt(arrayData[1]);
-    const i = arrayData[2];
-    const totalMinutes = arrayData[3];
+    const [sampleData, finalBalance, i, totalMinutes] = generateRoundsData();
+    // const sampleData = arrayData[0];
+    // const finalBalance = parseInt(arrayData[1]);
+    // const i = arrayData[2];
+    // const totalMinutes = arrayData[3];
 
     sampleData.forEach(data => {
         const row = resultsTable.insertRow();
@@ -29,7 +29,7 @@ function simulate() {
     
     if(finalBalance <= 0){
         setTimeout(() => {
-            alert(`You lost all your money in ${i-1} rounds. \nYou played for ${totalMinutes} minutes`);
+            alert(`You lost all your money in ${i-1} rounds. \nYour new balance is ${finalBalance}.\nYou played for ${totalMinutes} minutes`);
         }, 100);
     }
 }
