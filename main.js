@@ -4,13 +4,16 @@ document.getElementById('js-bet-green').value = 0;
 document.getElementById('js-initial-money').value = 0;
 document.getElementById('js-minutes').value = 0;
 
-
 function simulate() {
     const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
     resultsTable.innerHTML = '';
 
-    const sampleData = generateRoundsData();
-  
+    const arrayData = generateRoundsData();
+    const sampleData = arrayData[0];
+    const finalBalance = parseInt(arrayData[1]);
+    const i = arrayData[2];
+    const totalMinutes = arrayData[3];
+
     sampleData.forEach(data => {
         const row = resultsTable.insertRow();
         row.insertCell(0).innerText = data.round;
@@ -23,6 +26,12 @@ function simulate() {
         row.insertCell(7).innerText = data.final;
     });
 
+    
+    if(finalBalance <= 0){
+        setTimeout(() => {
+            alert(`You lost all your money in ${i-1} rounds. \nYou played for ${totalMinutes} minutes`);
+        }, 100);
+    }
 }
 
 function generateRoundsData() {
@@ -48,10 +57,7 @@ function generateRoundsData() {
     };
     if(!isMinutesZero()){
         return;
-    }
-    
-
-    
+    }   
     
     while(isWinning && i < 256) {
         totalMinutes += minutes;
@@ -88,18 +94,16 @@ function generateRoundsData() {
         initialBalance = finalBalance;
         if (finalBalance <= 0){
             isWinning = false;
-            alert(`You lost all your money in ${i} rounds. \nYou played for ${totalMinutes} minutes`);
         }
         i++;
     }
-
-    return tempArray;
+    console.log(initialBalance);
+    console.log(typeof(initialBalance));
+    return [tempArray, `${initialBalance}`, i, totalMinutes];
 }
-
 function getRandomNumber() {
     return Math.floor(Math.random() * 24) + 1;
 }
-
 function gameResults(randomNum) {
     const array = [
         ['win', 'win', 'win'],
@@ -129,9 +133,6 @@ function gameResults(randomNum) {
       ]
     return array[randomNum - 1];
 }
-
-console.log(gameResults(7));
-
 function isFieldsNumber(){
     const betRed = document.getElementById('js-bet-red');
     const betYellow = document.getElementById('js-bet-yellow');
@@ -151,7 +152,6 @@ function isFieldsNumber(){
         document.getElementById('js-initial-money').value = 0;
     }
 }
-
 function isFieldsPositive() {
     const betRedInput = document.getElementById('js-bet-red');
     const betYellowInput = document.getElementById('js-bet-yellow');
@@ -200,7 +200,6 @@ function isFieldsPositive() {
 
     return true;
 }
-
 function isMinutesZero(){
     const minutes = parseInt(document.getElementById('js-minutes').value);
 
@@ -223,7 +222,6 @@ function isMinutesZero(){
 
     return true;
 }
-
 function checkTotalBet(initialBalance, totalBet){
     if (totalBet > initialBalance) {
         alert(`Initial balance: ${initialBalance} should be greater than Total bet: ${totalBet}`);
