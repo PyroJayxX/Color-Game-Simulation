@@ -9,7 +9,7 @@ function simulate() {
     resultsTable.innerHTML = '';
 
     const [sampleData, finalBalance, i, totalMinutes] = generateRoundsData();
-    // const sampleData = arrayData[0];
+  
     // const finalBalance = parseInt(arrayData[1]);
     // const i = arrayData[2];
     // const totalMinutes = arrayData[3];
